@@ -101,6 +101,27 @@
                         [theme]="material ? 'dp-material dp-main' : 'dp-main'">
         </dp-date-picker>
 
+        <dp-date-picker id="daytimePicker2"
+                        name="daytimePicker2"
+                        #dateComponent2
+                        #daytimePicker2="ngModel"
+                        [(ngModel)]="date2"
+                        (onChange)="log($event)"
+                        [mode]="'daytime'"
+                        [displayDate]="displayDate"
+                        (open)="opened()"
+                        (close)="closed()"
+                        (onLeftNav)="onLeftNav($event)"
+                        (onRightNav)="onRightNav($event)"
+                        [disabled]="disabled"
+                        [minDate]="validationMinDate"
+                        [maxDate]="validationMaxDate"
+                        [required]="required"
+                        [placeholder]="placeholder"
+                        [config]="config"
+                        [theme]="material ? 'dp-material dp-main' : 'dp-main'">
+        </dp-date-picker>
+
         <div class="dp-validations">
           <div id="requiredValidation" *ngIf="daytimePicker.errors?.required">required</div>
           <div id="formatValidation" *ngIf="daytimePicker.errors?.format">invalid format</div>

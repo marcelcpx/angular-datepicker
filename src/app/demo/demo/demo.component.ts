@@ -1,14 +1,14 @@
 import debounce from '../../common/decorators/decorators';
-import {IDatePickerConfig} from '../../date-picker/date-picker-config.model';
-import {DatePickerComponent} from '../../date-picker/date-picker.component';
-import {DatePickerDirective} from '../../date-picker/date-picker.directive';
-import {Component, HostListener, ViewChild} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { IDatePickerConfig } from '../../date-picker/date-picker-config.model';
+import { DatePickerComponent } from '../../date-picker/date-picker.component';
+import { DatePickerDirective } from '../../date-picker/date-picker.directive';
+import { Component, HostListener, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as momentNs from 'moment';
-import {Moment} from 'moment';
-import {GaService} from '../services/ga/ga.service';
-import {ECalendarValue} from '../../common/types/calendar-value-enum';
-import {INavEvent} from '../../common/models/navigation-event.model';
+import { Moment } from 'moment';
+import { GaService } from '../services/ga/ga.service';
+import { ECalendarValue } from '../../common/types/calendar-value-enum';
+import { INavEvent } from '../../common/models/navigation-event.model';
 const moment = momentNs;
 
 const GLOBAL_OPTION_KEYS = [
@@ -119,6 +119,7 @@ const DAY_TIME_CALENDAR_OPTION_KEYS = [
 export class DemoComponent {
   showDemo: boolean = true;
   @ViewChild('dateComponent') dateComponent: DatePickerComponent;
+  @ViewChild('dateComponent2') dateComponent2: DatePickerComponent;
   @ViewChild('donateForm') donateForm: any;
   @ViewChild('dateDirectivePicker') datePickerDirective: DatePickerDirective;
   demoFormat = 'DD-MM-YYYY';
@@ -150,7 +151,7 @@ export class DemoComponent {
   validationMaxTime: Moment;
   placeholder: string = 'Choose a date...';
   displayDate: Moment | string;
-  dateTypes: {name: string, value: ECalendarValue}[] = [
+  dateTypes: { name: string, value: ECalendarValue }[] = [
     {
       name: 'Guess',
       value: null
@@ -174,16 +175,16 @@ export class DemoComponent {
   ];
 
   formGroup: FormGroup = new FormGroup({
-    datePicker: new FormControl({value: this.date, disabled: this.disabled}, [
+    datePicker: new FormControl({ value: this.date, disabled: this.disabled }, [
       this.required ? Validators.required : () => undefined,
       control => this.validationMinDate && this.config &&
-      moment(control.value, this.config.format || this.getDefaultFormatByMode(this.pickerMode))
-        .isBefore(this.validationMinDate)
-        ? {minDate: 'minDate Invalid'} : undefined,
+        moment(control.value, this.config.format || this.getDefaultFormatByMode(this.pickerMode))
+          .isBefore(this.validationMinDate)
+        ? { minDate: 'minDate Invalid' } : undefined,
       control => this.validationMaxDate && this.config &&
-      moment(control.value, this.config.format || this.getDefaultFormatByMode(this.pickerMode))
-        .isAfter(this.validationMaxDate)
-        ? {maxDate: 'maxDate Invalid'} : undefined
+        moment(control.value, this.config.format || this.getDefaultFormatByMode(this.pickerMode))
+          .isAfter(this.validationMaxDate)
+        ? { maxDate: 'maxDate Invalid' } : undefined
     ])
   });
 
@@ -256,7 +257,7 @@ export class DemoComponent {
   }
 
   configChanged(change: string = 'N/A', value: any = 'N/A') {
-    this.config = {...this.config};
+    this.config = { ...this.config };
 
     this.gaService.emitEvent('ConfigChange', change, value);
 
@@ -293,53 +294,53 @@ export class DemoComponent {
     switch (this.pickerMode) {
       case 'dayInline':
         return [
-            ...DAY_CALENDAR_OPTION_KEYS
-          ].indexOf(key) > -1;
+          ...DAY_CALENDAR_OPTION_KEYS
+        ].indexOf(key) > -1;
       case 'monthInline':
         return [
-            ...MONTH_CALENDAR_OPTION_KEYS
-          ].indexOf(key) > -1;
+          ...MONTH_CALENDAR_OPTION_KEYS
+        ].indexOf(key) > -1;
       case 'timeInline':
         return [
-            ...TIME_SELECT_OPTION_KEYS
-          ].indexOf(key) > -1;
+          ...TIME_SELECT_OPTION_KEYS
+        ].indexOf(key) > -1;
       case 'daytimeInline':
         return [
-            ...DAY_TIME_CALENDAR_OPTION_KEYS
-          ].indexOf(key) > -1;
+          ...DAY_TIME_CALENDAR_OPTION_KEYS
+        ].indexOf(key) > -1;
       case 'dayPicker':
         return [
-            ...DAY_PICKER_OPTION_KEYS,
-            ...DAY_CALENDAR_OPTION_KEYS
-          ].indexOf(key) > -1;
+          ...DAY_PICKER_OPTION_KEYS,
+          ...DAY_CALENDAR_OPTION_KEYS
+        ].indexOf(key) > -1;
       case 'dayDirective':
       case 'dayDirectiveReactiveMenu':
         return [
-            ...DAY_PICKER_DIRECTIVE_OPTION_KEYS,
-            ...DAY_CALENDAR_OPTION_KEYS
-          ].indexOf(key) > -1;
+          ...DAY_PICKER_DIRECTIVE_OPTION_KEYS,
+          ...DAY_CALENDAR_OPTION_KEYS
+        ].indexOf(key) > -1;
       case 'monthPicker':
         return [
-            ...DAY_PICKER_OPTION_KEYS,
-            ...MONTH_CALENDAR_OPTION_KEYS
-          ].indexOf(key) > -1;
+          ...DAY_PICKER_OPTION_KEYS,
+          ...MONTH_CALENDAR_OPTION_KEYS
+        ].indexOf(key) > -1;
       case 'monthDirective':
         return [
-            ...DAY_PICKER_DIRECTIVE_OPTION_KEYS,
-            ...MONTH_CALENDAR_OPTION_KEYS
-          ].indexOf(key) > -1;
+          ...DAY_PICKER_DIRECTIVE_OPTION_KEYS,
+          ...MONTH_CALENDAR_OPTION_KEYS
+        ].indexOf(key) > -1;
       case 'timePicker':
       case 'timeDirective':
         return [
-            ...TIME_PICKER_OPTION_KEYS,
-            ...TIME_SELECT_OPTION_KEYS
-          ].indexOf(key) > -1;
+          ...TIME_PICKER_OPTION_KEYS,
+          ...TIME_SELECT_OPTION_KEYS
+        ].indexOf(key) > -1;
       case 'daytimePicker':
       case 'daytimeDirective':
         return [
-            ...DAY_TIME_PICKER_OPTION_KEYS,
-            ...DAY_TIME_CALENDAR_OPTION_KEYS
-          ].indexOf(key) > -1;
+          ...DAY_TIME_PICKER_OPTION_KEYS,
+          ...DAY_TIME_CALENDAR_OPTION_KEYS
+        ].indexOf(key) > -1;
       default:
         return true;
     }
